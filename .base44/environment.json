@@ -1,0 +1,32 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      "description": "Clerk publishable key (pk_test_...) from your Clerk dashboard → API Keys",
+      "requiredAtBoot": true
+    },
+    {
+      "name": "CLERK_SECRET_KEY",
+      "description": "Clerk secret key (sk_test_...) from your Clerk dashboard → API Keys",
+      "requiredAtBoot": true
+    },
+    {
+      "name": "CLERK_JWT_ISSUER_DOMAIN",
+      "description": "Clerk JWT issuer domain (e.g. https://your-app.clerk.accounts.dev) from your Clerk dashboard",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "AI_GATEWAY_API_KEY",
+      "description": "Vercel AI Gateway API key — optional, only needed for AI stylist features",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "AGENT_SERVICE_KEY",
+      "description": "Shared secret for the agent ↔ Convex service authentication — optional for boot, needed for agent features",
+      "requiredAtBoot": false
+    }
+  ]
+}
