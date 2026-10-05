@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
     ...(process.env.BASE44_PUBLIC_HOST_SUFFIX
       ? [`3000-${process.env.BASE44_PUBLIC_HOST_SUFFIX}`]
       : []),
-    ...(process.env.BASE44_SANDBOX_HOST_DOMAIN
-      ? [`.${process.env.BASE44_SANDBOX_HOST_DOMAIN}`]
+    ...(process.env.E2B_SANDBOX_ID && process.env.BASE44_SANDBOX_HOST_DOMAIN
+      ? [`3000-${process.env.E2B_SANDBOX_ID}.${process.env.BASE44_SANDBOX_HOST_DOMAIN}`]
       : []),
   ],
 };
