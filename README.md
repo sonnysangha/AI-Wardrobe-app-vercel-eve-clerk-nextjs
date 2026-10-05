@@ -52,6 +52,7 @@ The Clerk link above is Sonny’s campaign link. Set up your own service account
 - [The contextual AI stylist](#stylist)
 - [Authentication, subscriptions and credits](#auth-and-credits)
 - [Database and routes](#data-and-routes)
+- [Base Code preview](#base-code-preview)
 - [Getting started](#getting-started)
 - [Demo walkthrough](#demo-walkthrough)
 - [Testing and verification](#verification)
@@ -449,6 +450,37 @@ The full schema and indexes are in [`convex/schema.ts`](convex/schema.ts). Busin
 | `/admin`                                          | Authorized operational dashboard                          |
 
 The global stylist panel also works across the signed-in routes.
+
+---
+
+<a id="base-code-preview"></a>
+
+## Base Code Preview
+
+For a repeatable browser demo, prepare the services before recording: a dedicated **Convex development deployment** with this repository's backend functions, and a matching **Clerk development instance** with the Convex integration enabled. Configure the backend's Clerk issuer and secret, set its `SITE_URL` to a reachable app origin for demo images, and verify your demo account. A local `127.0.0.1` backend is not reachable from Base Code.
+
+1. Import this GitHub repository into Base Code and select the branch containing [`docker-compose.base44.yml`](docker-compose.base44.yml).
+2. In Base Code's **Secrets** UI, add these three real values:
+
+   | Name | Value to use |
+   | --- | --- |
+   | `NEXT_PUBLIC_CONVEX_URL` | Your prepared Convex development deployment URL |
+   | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Your Clerk development instance's publishable key |
+   | `CLERK_SECRET_KEY` | The same Clerk instance's secret key |
+
+3. If Base Code asks for the startup command, use:
+
+   ```bash
+   docker compose -f docker-compose.base44.yml up -d
+   ```
+
+   Base Code supplies `/run/base44/app.env` from its Secrets UI. The Compose file installs the pinned dependencies, supplies the sign-in route defaults and starts the preview on port 3000. No separate defaults file or backend development process is needed in the preview.
+
+4. Open the preview, sign in, complete onboarding and open the wardrobe. Use **Seed demo wardrobe** to load garments, then verify the starting state before requesting your feature change.
+
+This flow uses real Clerk authentication and Convex data. Login, onboarding and the seeded wardrobe do not need AI credentials. Photo scanning, image generation and the stylist need the additional credentials described in [Getting started](#getting-started); leave those features unused for a wardrobe UI demo.
+
+Keep credentials in the Secrets UI, out of commits and recorded footage. Do not use placeholder keys or `SKIP_ENV_VALIDATION` to get the preview past setup.
 
 ---
 

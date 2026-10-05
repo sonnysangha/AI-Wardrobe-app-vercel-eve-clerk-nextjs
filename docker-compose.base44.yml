@@ -8,17 +8,21 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./.env.base44-defaults
       - /run/base44/app.env
     environment:
-      - BASE44_PUBLIC_HOST_SUFFIX=${BASE44_PUBLIC_HOST_SUFFIX}
+      BASE44_PUBLIC_HOST_SUFFIX: ${BASE44_PUBLIC_HOST_SUFFIX:-}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: /wardrobe
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: /onboarding
+      NEXT_TELEMETRY_DISABLED: "1"
     command:
       - sh
       - -ec
       - |
         corepack enable
         CI=true pnpm install --frozen-lockfile
-        exec pnpm dev -- --hostname 0.0.0.0 --port 3000
+        exec pnpm exec next dev --hostname 0.0.0.0 --port 3000
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 10s
