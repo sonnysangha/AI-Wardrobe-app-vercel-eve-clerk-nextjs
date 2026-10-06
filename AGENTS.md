@@ -93,5 +93,7 @@ The app runs via `docker compose -f docker-compose.base44.yml up -d` (Node 24 + 
 - **Convex** — hosted backend (database, file storage, realtime queries, workflows). The Next.js client connects via `NEXT_PUBLIC_CONVEX_URL`.
 - **Vercel Eve** — AI agent, started automatically by `withEve` in `next.config.ts` alongside `next dev`. The stylist tools are optional for the wardrobe demo.
 
+**Preview proxy (do not remove):** port 3000 is published by the `preview-proxy` nginx service (`.base44/nginx.conf.template`), not by `web`. The sandbox proxy forwards plain `http` with the `*.e2b.app` Host, so without it Clerk's dev handshake builds `redirect_url=http://…e2b.app/` and the HTTPS preview iframe blocks it as mixed content. nginx sets `X-Forwarded-Proto: https` and `X-Forwarded-Host: 3000-$BASE44_PUBLIC_HOST_SUFFIX` so the handshake returns to the https preview origin. Check with `curl -sD- -o/dev/null -H 'Sec-Fetch-Dest: document' -H 'Accept: text/html' http://localhost:3000/ | grep -i location` — `redirect_url` must be `https://3000-…`.
+
 **Verify:** `curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/` returns 200 after the three secrets are in place.
 <!-- END:base44-dev-environment -->

@@ -5,8 +5,8 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     env_file:
       - ./.env.base44-defaults
       - /run/base44/app.env
@@ -32,4 +32,23 @@ services:
       timeout: 5s
       retries: 6
       start_period: 120s
+    restart: on-failure
+
+  preview-proxy:
+    image: nginx:alpine
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      BASE44_PUBLIC_HOST_SUFFIX: ${BASE44_PUBLIC_HOST_SUFFIX:-}
+    volumes:
+      - ./.base44/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
     restart: on-failure
