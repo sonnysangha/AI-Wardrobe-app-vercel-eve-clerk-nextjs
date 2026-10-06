@@ -42,6 +42,7 @@ export type WardrobeFilters = {
   formality: Formality[];
   sort: SortKey;
   showHidden: boolean;
+  neverWorn: boolean;
 };
 
 export const DEFAULT_FILTERS: WardrobeFilters = {
@@ -52,6 +53,7 @@ export const DEFAULT_FILTERS: WardrobeFilters = {
   formality: [],
   sort: "newest",
   showHidden: false,
+  neverWorn: false,
 };
 
 export type ColourOption = { value: string; hex: string | null; count: number };
@@ -110,6 +112,19 @@ export function WardrobeToolbar({
             </InputGroupAddon>
           ) : null}
         </InputGroup>
+
+        <Button
+          variant="outline"
+          className={cn(
+            "h-10 rounded-full px-4 shadow-none transition-colors",
+            filters.neverWorn && "border-primary bg-primary/10",
+          )}
+          aria-pressed={filters.neverWorn}
+          onClick={() => onChange({ neverWorn: !filters.neverWorn })}
+          disabled={disabled}
+        >
+          Never worn
+        </Button>
 
         <Popover>
           <PopoverTrigger

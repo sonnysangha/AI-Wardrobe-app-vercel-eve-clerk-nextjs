@@ -89,6 +89,11 @@ export function ItemTile({ item, selected, selectionMode, onToggleSelect }: Item
               Needs credits
             </Badge>
           ) : null}
+          {item.wearCount === 0 ? (
+            <Badge variant="outline" className="absolute left-2 bottom-2 bg-background/90 backdrop-blur">
+              Not worn yet
+            </Badge>
+          ) : null}
         </div>
         <div className="space-y-1.5 px-1">
           <p className="line-clamp-2 text-sm leading-snug font-medium tracking-[-0.02em]">{item.name}</p>

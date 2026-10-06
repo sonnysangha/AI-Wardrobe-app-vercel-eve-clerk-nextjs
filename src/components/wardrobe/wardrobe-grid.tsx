@@ -60,6 +60,7 @@ export function WardrobeGrid() {
       if (filters.colours.length > 0 && !filters.colours.includes(item.colours.primary)) return false;
       if (filters.seasons.length > 0 && !filters.seasons.some((season) => item.season.includes(season))) return false;
       if (filters.formality.length > 0 && !filters.formality.includes(item.formality)) return false;
+      if (filters.neverWorn && item.wearCount > 0) return false;
       return true;
     });
     return sortItems(filtered, filters.sort);
@@ -104,7 +105,8 @@ export function WardrobeGrid() {
     }
   }
 
-  const hasFilters = activeFilterCount(filters) > 0 || filters.query.trim().length > 0 || filters.category !== "all";
+  const hasFilters =
+    activeFilterCount(filters) > 0 || filters.query.trim().length > 0 || filters.category !== "all" || filters.neverWorn;
 
   return (
     <div className="@container space-y-7">
