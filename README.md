@@ -459,7 +459,7 @@ The global stylist panel also works across the signed-in routes.
 
 For a repeatable browser demo, prepare the services before recording: a dedicated **Convex development deployment** with this repository's backend functions, and a matching **Clerk development instance** with the Convex integration enabled. Configure the backend's Clerk issuer and secret, set its `SITE_URL` to a reachable app origin for demo images, and verify your demo account. A local `127.0.0.1` backend is not reachable from Base Code.
 
-1. Import this GitHub repository into Base Code and select the branch containing [`docker-compose.base44.yml`](docker-compose.base44.yml).
+1. Import this GitHub repository into Base Code and select `main`, which includes [`docker-compose.base44.yml`](docker-compose.base44.yml).
 2. In Base Code's **Secrets** UI, add these three real values:
 
    | Name | Value to use |
