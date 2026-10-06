@@ -8,6 +8,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
+      - ./.env.base44-defaults
       - /run/base44/app.env
     environment:
       BASE44_PUBLIC_HOST_SUFFIX: ${BASE44_PUBLIC_HOST_SUFFIX:-}
