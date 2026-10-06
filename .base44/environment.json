@@ -1,0 +1,10 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    { "name": "NEXT_PUBLIC_CONVEX_URL", "description": "Convex deployment URL (e.g. https://spotted-seal-725.convex.cloud)", "requiredAtBoot": true },
+    { "name": "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "description": "Clerk publishable key (pk_test_...)", "requiredAtBoot": true },
+    { "name": "CLERK_SECRET_KEY", "description": "Clerk secret key (sk_test_...)", "requiredAtBoot": true }
+  ]
+}

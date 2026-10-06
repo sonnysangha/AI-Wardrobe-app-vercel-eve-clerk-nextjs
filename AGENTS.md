@@ -79,3 +79,19 @@ Read `PLAN.md` first. It is the contract: routes, schema, function names, credit
 ## Reporting back (for subagents)
 
 End your work with: files you created/changed, any shared helpers you added or wished existed, any deviation from `PLAN.md`, anything left unfinished, and the exact commands you ran to verify (typecheck output included).
+
+<!-- BEGIN:base44-dev-environment -->
+
+## Base44 dev environment
+
+The app runs via `docker compose -f docker-compose.base44.yml up -d` (Node 24 + pnpm, Next.js dev with Turbopack, Eve agent dev server). The compose bind-mounts the repo, installs deps with `pnpm install --frozen-lockfile`, and starts `pnpm exec next dev --hostname 0.0.0.0 --port 3000`.
+
+**Required secrets (3 only):** `NEXT_PUBLIC_CONVEX_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` — delivered via `/run/base44/app.env`. Before starting the preview, deploy the Convex backend and configure its matching Clerk development instance as described in README. No AI/Gateway/agent keys are needed for the wardrobe preview.
+
+**Services used by this preview:**
+- **Clerk** — hosted auth. The proxy (`src/proxy.ts`) runs `clerkMiddleware()` on every request. Real Clerk keys are required — the app does not use `SKIP_ENV_VALIDATION`.
+- **Convex** — hosted backend (database, file storage, realtime queries, workflows). The Next.js client connects via `NEXT_PUBLIC_CONVEX_URL`.
+- **Vercel Eve** — AI agent, started automatically by `withEve` in `next.config.ts` alongside `next dev`. The stylist tools are optional for the wardrobe demo.
+
+**Verify:** `curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/` returns 200 after the three secrets are in place.
+<!-- END:base44-dev-environment -->
