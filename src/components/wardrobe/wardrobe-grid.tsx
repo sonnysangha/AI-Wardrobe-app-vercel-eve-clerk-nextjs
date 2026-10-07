@@ -60,10 +60,11 @@ export function WardrobeGrid() {
       if (filters.colours.length > 0 && !filters.colours.includes(item.colours.primary)) return false;
       if (filters.seasons.length > 0 && !filters.seasons.some((season) => item.season.includes(season))) return false;
       if (filters.formality.length > 0 && !filters.formality.includes(item.formality)) return false;
+      if (filters.neverWorn && item.wearCount > 0) return false;
       return true;
     });
     return sortItems(filtered, filters.sort);
-  }, [filters.colours, filters.formality, filters.seasons, filters.sort, items]);
+  }, [filters.colours, filters.formality, filters.neverWorn, filters.seasons, filters.sort, items]);
 
   const selectedContext = useMemo(
     () => createStylistSelectionContext((items ?? []).filter((item) => selected.has(item._id))),
