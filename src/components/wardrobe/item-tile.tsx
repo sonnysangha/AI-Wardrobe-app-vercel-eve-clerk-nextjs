@@ -106,6 +106,11 @@ export function ItemTile({ item, selected, selectionMode, onToggleSelect }: Item
               ))}
             </div>
           </div>
+          {item.wearCount === 0 ? (
+            <Badge variant="outline" className="mt-1 text-muted-foreground">
+              Not worn yet
+            </Badge>
+          ) : null}
           {item.duplicateOfId ? (
             <Badge variant="outline" className="mt-1">
               <Copy aria-hidden />

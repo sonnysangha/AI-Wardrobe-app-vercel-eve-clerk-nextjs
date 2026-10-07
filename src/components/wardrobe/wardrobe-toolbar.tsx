@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Search, SlidersHorizontal, X } from "lucide-react";
+import { Check, Search, Shirt, SlidersHorizontal, X } from "lucide-react";
 import { useId } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,6 +42,7 @@ export type WardrobeFilters = {
   formality: Formality[];
   sort: SortKey;
   showHidden: boolean;
+  neverWorn: boolean;
 };
 
 export const DEFAULT_FILTERS: WardrobeFilters = {
@@ -52,6 +53,7 @@ export const DEFAULT_FILTERS: WardrobeFilters = {
   formality: [],
   sort: "newest",
   showHidden: false,
+  neverWorn: false,
 };
 
 export type ColourOption = { value: string; hex: string | null; count: number };
@@ -66,7 +68,7 @@ type WardrobeToolbarProps = {
 };
 
 export function activeFilterCount(filters: WardrobeFilters): number {
-  return filters.colours.length + filters.seasons.length + filters.formality.length;
+  return filters.colours.length + filters.seasons.length + filters.formality.length + Number(filters.neverWorn);
 }
 
 export function WardrobeToolbar({
@@ -111,6 +113,21 @@ export function WardrobeToolbar({
           ) : null}
         </InputGroup>
 
+        <Button
+          variant="outline"
+          aria-pressed={filters.neverWorn}
+          onClick={() => onChange({ neverWorn: !filters.neverWorn })}
+          className={cn(
+            "h-10 rounded-full border-border bg-transparent px-4 shadow-none",
+            filters.neverWorn &&
+              "border-foreground bg-foreground text-background hover:bg-foreground/90 hover:text-background",
+          )}
+          disabled={disabled}
+        >
+          <Shirt data-icon="inline-start" />
+          Never worn
+        </Button>
+
         <Popover>
           <PopoverTrigger
             render={
@@ -134,7 +151,11 @@ export function WardrobeToolbar({
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium">Filters</p>
               {count > 0 ? (
-                <Button variant="ghost" size="xs" onClick={() => onChange({ colours: [], seasons: [], formality: [] })}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onChange({ colours: [], seasons: [], formality: [], neverWorn: false })}
+                >
                   Clear all
                 </Button>
               ) : null}
