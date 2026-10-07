@@ -64,7 +64,7 @@ export function WardrobeGrid() {
       return true;
     });
     return sortItems(filtered, filters.sort);
-  }, [filters.colours, filters.formality, filters.seasons, filters.sort, items]);
+  }, [filters.colours, filters.formality, filters.neverWorn, filters.seasons, filters.sort, items]);
 
   const selectedContext = useMemo(
     () => createStylistSelectionContext((items ?? []).filter((item) => selected.has(item._id))),
