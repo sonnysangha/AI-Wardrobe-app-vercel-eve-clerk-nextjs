@@ -153,7 +153,7 @@ export function WardrobeToolbar({
               {count > 0 ? (
                 <Button
                   variant="ghost"
-                  size="xs"
+                  size="sm"
                   onClick={() => onChange({ colours: [], seasons: [], formality: [], neverWorn: false })}
                 >
                   Clear all
